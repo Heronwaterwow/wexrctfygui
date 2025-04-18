@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preferences</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header styles */
+        .header {
+            padding: 20px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 16px;
+            background: none;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        /* Content styles */
+        .content {
+            padding: 0 16px;
+            flex: 1;
+        }
+
+        /* Preference option styles */
+        .preference-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #2a2a2a;
+            cursor: pointer;
+        }
+
+        .preference-option:last-child {
+            border-bottom: none;
+        }
+
+        .preference-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preference-title {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .preference-value {
+            font-size: 14px;
+            color: #9b9b9d;
+        }
+
+        .chevron-right {
+            color: #9b9b9d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <button class="back-button" id="back-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 12H5"></path>
+                <path d="M12 19l-7-7 7-7"></path>
+            </svg>
+        </button>
+        <h1 class="header-title">Preferences</h1>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+        <!-- Currency Option -->
+        <div class="preference-option" id="currency-option">
+            <div class="preference-info">
+                <div class="preference-title">Currency</div>
+                <div class="preference-value">USD</div>
+            </div>
+            <div class="chevron-right">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </div>
+        </div>
+
+        <!-- App Language Option -->
+        <div class="preference-option" id="language-option">
+            <div class="preference-info">
+                <div class="preference-title">App Language</div>
+                <div class="preference-value">English</div>
+            </div>
+            <div class="chevron-right">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </div>
+        </div>
+
+        <!-- DApp Browser Option -->
+        <div class="preference-option" id="dapp-option">
+            <div class="preference-info">
+                <div class="preference-title">DApp Browser</div>
+            </div>
+            <div class="chevron-right">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Node Settings Option -->
+        <div class="preference-option" id="node-option">
+            <div class="preference-info">
+                <div class="preference-title">Node Settings</div>
+            </div>
+            <div class="chevron-right">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Unlock UTXOs Option -->
+        <div class="preference-option" id="utxo-option">
+            <div class="preference-info">
+                <div class="preference-title">Unlock UTXOs</div>
+            </div>
+            <div class="chevron-right">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Back button functionality
+            const backButton = document.getElementById('back-button');
+            backButton.addEventListener('click', function() {
+                console.log('Back button clicked');
+                // In a real app, this would navigate back
+                alert('This would navigate back to the previous screen');
+            });
+
+            // Preference option click handlers
+            const preferenceOptions = document.querySelectorAll('.preference-option');
+            preferenceOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const optionId = this.id;
+                    console.log(`${optionId} clicked`);
+                    
+                    // Handle different options
+                    switch(optionId) {
+                        case 'currency-option':
+                            alert('This would open currency selection');
+                            break;
+                        case 'language-option':
+                            alert('This would open language selection');
+                            break;
+                        case 'dapp-option':
+                            alert('This would open DApp Browser settings');
+                            break;
+                        case 'node-option':
+                            alert('This would open Node Settings');
+                            break;
+                        case 'utxo-option':
+                            alert('This would open Unlock UTXOs screen');
+                            break;
+                        default:
+                            alert('This would open the selected option');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

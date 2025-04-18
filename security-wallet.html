@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Wallet Security</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header styles */
+        .header {
+            padding: 20px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 16px;
+            background: none;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        .header-right {
+            position: absolute;
+            right: 16px;
+            display: flex;
+            gap: 16px;
+        }
+
+        .info-button, .trash-button {
+            background: none;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .save-button {
+            background: none;
+            border: none;
+            color: #48f98f;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        /* Content styles */
+        .content {
+            padding: 20px 16px;
+            flex: 1;
+        }
+
+        /* Toggle switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 30px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #3a3a3a;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #48f98f;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Security page styles */
+        .security-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .security-option-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .security-option-title {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .security-option-description {
+            font-size: 14px;
+            color: #9b9b9d;
+        }
+
+        .security-section-title {
+            font-size: 16px;
+            color: #9b9b9d;
+            margin: 24px 0 16px;
+        }
+
+        .chevron-right {
+            color: #9b9b9d;
+        }
+
+        /* Wallet page styles */
+        .wallet-page {
+            display: none; /* Hidden by default */
+        }
+
+        .security-page {
+            display: block;
+        }
+
+        .backup-section-title {
+            font-size: 16px;
+            color: #9b9b9d;
+            margin-bottom: 24px;
+        }
+
+        .backup-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background-color: #1e1e1e;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .backup-option-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .backup-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #2a2a2a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .backup-option-title {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .backup-now {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #48f98f;
+        }
+
+        .backup-description {
+            font-size: 14px;
+            color: #9b9b9d;
+            line-height: 1.5;
+            margin-top: 16px;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Security Page -->
+    <div id="security-page" class="page active">
+        <div class="header">
+            <button class="back-button" id="security-back-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5"></path>
+                    <path d="M12 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+            <h1 class="header-title">Security</h1>
+            <div class="header-right">
+                <button class="info-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Passcode Toggle -->
+            <div class="security-option">
+                <div class="security-option-info">
+                    <div class="security-option-title">Passcode</div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="passcode-toggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- Seed Phrase Option -->
+            <div class="security-option" id="seed-phrase-option">
+                <div class="security-option-info">
+                    <div class="security-option-title">Seed phrase</div>
+                    <div class="security-option-description">12 words</div>
+                </div>
+                <div class="chevron-right">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Lock Method Option -->
+            <div class="security-option">
+                <div class="security-option-info">
+                    <div class="security-option-title">Lock method</div>
+                    <div class="security-option-description">Passcode</div>
+                </div>
+                <div class="chevron-right">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Transaction Signing Toggle -->
+            <div class="security-option">
+                <div class="security-option-info">
+                    <div class="security-option-title">Transaction signing</div>
+                    <div class="security-option-description">Ask for approval ahead of transactions.</div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="transaction-toggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- Third-party Requests Section -->
+            <div class="security-section-title">Third-party requests</div>
+
+            <!-- eth_sign Toggle -->
+            <div class="security-option">
+                <div class="security-option-info">
+                    <div class="security-option-title">Allow 'eth_sign'</div>
+                    <div class="security-option-description">Encoded message signature requests</div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="eth-sign-toggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wallet Page -->
+    <div id="wallet-page" class="page">
+        <div class="header">
+            <button class="back-button" id="wallet-back-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5"></path>
+                    <path d="M12 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+            <h1 class="header-title">Wallet</h1>
+            <div class="header-right">
+                <button class="trash-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                </button>
+                <button class="save-button">Save</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="backup-section-title">Secret phrase backups</div>
+
+            <!-- Manual Backup Option -->
+            <div class="backup-option">
+                <div class="backup-option-left">
+                    <div class="backup-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9b9b9d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 11.08V8l-6-6H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h6"></path>
+                            <path d="M14 2v6h6"></path>
+                            <path d="M18.5 15a3.5 3.5 0 1 0 0 7 3.5 3.5 0 1 0 0-7z"></path>
+                            <path d="M18.5 16.5v2"></path>
+                            <path d="M18.5 20.5v.5"></path>
+                        </svg>
+                    </div>
+                    <div class="backup-option-title">Manual</div>
+                </div>
+                <div class="backup-now">
+                    <span>Back up now</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Backup Description -->
+            <div class="backup-description">
+                We highly recommend completing both backup options to help prevent the loss of your crypto.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get page elements
+            const securityPage = document.getElementById('security-page');
+            const walletPage = document.getElementById('wallet-page');
+            
+            // Get navigation elements
+            const seedPhraseOption = document.getElementById('seed-phrase-option');
+            const securityBackButton = document.getElementById('security-back-button');
+            const walletBackButton = document.getElementById('wallet-back-button');
+            
+            // Seed phrase option click handler - navigate to wallet page
+            seedPhraseOption.addEventListener('click', function() {
+                securityPage.classList.remove('active');
+                walletPage.classList.add('active');
+            });
+            
+            // Security back button click handler
+            securityBackButton.addEventListener('click', function() {
+                console.log('Back to previous screen');
+                // In a real app, this would navigate back
+                alert('This would navigate back to the previous screen');
+            });
+            
+            // Wallet back button click handler - navigate back to security page
+            walletBackButton.addEventListener('click', function() {
+                walletPage.classList.remove('active');
+                securityPage.classList.add('active');
+            });
+            
+            // Toggle switches functionality
+            const toggleSwitches = document.querySelectorAll('.switch input');
+            toggleSwitches.forEach(toggle => {
+                toggle.addEventListener('change', function() {
+                    const toggleId = this.id;
+                    const isChecked = this.checked;
+                    console.log(`${toggleId} is now ${isChecked ? 'enabled' : 'disabled'}`);
+                });
+            });
+            
+            // Save button click handler
+            const saveButton = document.querySelector('.save-button');
+            saveButton.addEventListener('click', function() {
+                console.log('Save button clicked');
+                alert('Changes saved successfully!');
+            });
+            
+            // Trash button click handler
+            const trashButton = document.querySelector('.trash-button');
+            trashButton.addEventListener('click', function() {
+                console.log('Trash button clicked');
+                alert('This would delete the current backup');
+            });
+            
+            // Info button click handler
+            const infoButton = document.querySelector('.info-button');
+            infoButton.addEventListener('click', function() {
+                console.log('Info button clicked');
+                alert('This would show security information');
+            });
+            
+            // Manual backup option click handler
+            const backupOption = document.querySelector('.backup-option');
+            backupOption.addEventListener('click', function() {
+                console.log('Manual backup option clicked');
+                alert('This would start the manual backup process');
+            });
+        });
+    </script>
+</body>
+</html>
