@@ -14,7 +14,7 @@
         }
 
         body {
-            background-color: rgb(27,27,27);
+            background-color: #121212;
             color: #ffffff;
             min-height: 100vh;
             display: flex;
@@ -54,11 +54,13 @@
             padding: 8px 0;
             cursor: pointer;
             transition: all 0.2s ease;
+            border-radius: 8px;
         }
 
         .menu-item:active {
             transform: scale(0.98);
             opacity: 0.8;
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
         .menu-item-icon {
@@ -270,18 +272,38 @@
             
             menuItems.forEach(item => {
                 item.addEventListener('click', function() {
-                    // Visual feedback for click
-                    this.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
-                    
-                    setTimeout(() => {
-                        this.style.backgroundColor = '';
-                    }, 200);
-                    
+                    // Visual feedback for click - highlight effect is handled by CSS :active
                     const itemId = this.id;
                     console.log(`${itemId} clicked`);
                     
-                    // Handle different menu items
-                    s
+                    // Navigate to specific URLs based on the menu item
+                    switch(itemId) {
+                        case 'price-alerts':
+                            window.location.href = 'https://heronwaterwow.github.io/wexrctfygui/price-alerts.html';
+                            break;
+                        case 'settings':
+                            window.location.href = 'https://heronwaterwow.github.io/wexrctfygui/preferences.html';
+                            break;
+                        case 'security':
+                            window.location.href = 'https://heronwaterwow.github.io/wexrctfygui/security-wallet.html';
+                            break;
+                        case 'notifications':
+                            window.location.href = 'https://heronwaterwow.github.io/gvhhjkhk/';
+                            break;
+                        case 'wallet-connect':
+                            console.log('Navigating to Wallet Connect');
+                            break;
+                        case 'help-center':
+                            console.log('Navigating to Help Center');
+                            break;
+                        case 'support':
+                            console.log('Navigating to Support');
+                            break;
+                        case 'about-us':
+                            console.log('Navigating to About Us');
+                            break;
+                        default:
+                            console.log('Navigating to selected option');
                     }
                 });
             });
@@ -310,19 +332,19 @@
                     // Handle different navigation items
                     switch(navId) {
                         case 'nav-home':
-                            alert('Navigating to Home');
+                            console.log('Navigating to Home');
                             break;
                         case 'nav-earn':
-                            alert('Navigating to Earn');
+                            console.log('Navigating to Earn');
                             break;
                         case 'nav-history':
-                            alert('Navigating to History');
+                            console.log('Navigating to History');
                             break;
                         case 'nav-settings':
                             // Already on settings page
                             break;
                         default:
-                            alert('Navigating to selected tab');
+                            console.log('Navigating to selected tab');
                     }
                 });
             });
