@@ -19,16 +19,20 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            /* Scale everything down by applying a transform to the body */
+            transform: scale(0.77);
+            transform-origin: top center;
         }
 
         .container {
             max-width: 100%;
-            width: 100%;
-            height: 100%;
+            width: 130%; /* Compensate for the scale down to maintain proper width */
+            height: 130%; /* Compensate for the scale down to maintain proper height */
             display: flex;
             flex-direction: column;
             padding: 20px;
             position: relative;
+            margin: 0 auto; /* Center the container */
         }
 
         .header {
@@ -175,12 +179,27 @@
             font-size: 18px;
             font-weight: 500;
         }
+
+        /* Media query to handle different screen sizes */
+        @media (max-height: 700px) {
+            .pin-section {
+                margin-top: 30px;
+            }
+            
+            .pin-title {
+                margin-bottom: 30px;
+            }
+            
+            .keypad {
+                grid-gap: 15px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <div class="title">Изменить пин-код</div>
+            <div class="title"></div>
             <div class="close-btn" id="closeBtn">
                 <svg viewBox="0 0 24 24">
                     <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
