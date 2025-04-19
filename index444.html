@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Восстановление кошелька</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .time {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .status-icons {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .battery {
+            background-color: #FFCC00;
+            color: #000;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .back-button {
+            width: 40px;
+            height: 40px;
+            background-color: #1c1c1e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            cursor: pointer;
+        }
+
+        .back-button svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            text-align: center;
+            color: #8e8e93;
+            margin-bottom: 40px;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        .seed-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-number {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8e8e93;
+            font-size: 16px;
+        }
+
+        .input-field {
+            background-color: #1c1c1e;
+            border-radius: 12px;
+            padding: 16px 16px 16px 45px;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            outline: none;
+            width: 100%;
+        }
+
+        .input-field:focus {
+            background-color: #2c2c2e;
+        }
+
+        .input-field.correct {
+            border: 1px solid #4CAF50;
+        }
+
+        .input-field.incorrect {
+            border: 1px solid #F44336;
+        }
+
+        .continue-button {
+            background-color: #3E3E41;
+            color: #8e8e93;
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: 500;
+            margin-top: auto;
+            cursor: not-allowed;
+            transition: all 0.3s;
+        }
+
+        .continue-button.active {
+            background-color: #5E5CE6;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(94, 92, 230, 0.5);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 5px rgba(94, 92, 230, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(94, 92, 230, 0.8);
+            }
+            100% {
+                box-shadow: 0 0 5px rgba(94, 92, 230, 0.5);
+            }
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 500px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+   
+    <div class="back-button">
+        <svg viewBox="0 0 24 24" fill="white">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+        </svg>
+    </div>
+
+    <div class="container">
+        <h1>Enter Seed Phrase</h1>
+        <p class="description">To restore access, enter the 12 secret words that you wrote down when creating your wallet</p>
+
+        <div class="seed-inputs">
+            <div class="input-wrapper">
+                <span class="input-number">1.</span>
+                <input type="text" class="input-field" data-index="1">
+            </div>
+            <div class="input-wrapper">
+                <span class="input-number">2.</span>
+                <input type="text" class="input-field" data-index="2">
+            </div>
+            <div class="input-wrapper">
+                <span class="input-number">3.</span>
+                <input type="text" class="input-field" data-index="3">
+            </div>
+            <div class="input-wrapper">
+                <span class="input-number">4.</span>
+                <input type="text" class="input-field" data-index="4">
+            </div>
+            <div class="input-wrapper">
+                <span class="input-number">5.</span>
+                <input type="text" class="input-field" data-index="5">
+            </div>
+            <div class="input-wrapper">
+                <span class="input-number">6.</span>
+                <input type="text" class="input-field" data-index="6">
+            </div>
+            <div class="input-wrapper">
+                <span class="input-number">7.</span>
+                <input type="text" class="input-field" data-index="7">
+            </div>
+            <div class="input-wrapper">
+                <span class="input-number">8.</span>
+                <input type="text" class="input-field" data-index="8">
+            </div>
+            <div class="input-wrapper">
+                <span class="input-number">9.</span>
+                <input type="text" class="input-field" data-index="9">
+            </div>
+            <div class="input-wrapper">
+                <span class="input-number">10.</span>
+                <input type="text" class="input-field" data-index="10">
+            </div>
+            <div class="input-wrapper">
+                <span class="input-number">11.</span>
+                <input type="text" class="input-field" data-index="11">
+            </div>
+            <div class="input-wrapper">
+                <span class="input-number">12.</span>
+                <input type="text" class="input-field" data-index="12">
+            </div>
+        </div>
+
+        <button class="continue-button" id="continueButton">Continue</button>
+    </div>
+
+    <script>
+        // Correct seed phrase words
+        const correctWords = [
+            "Serendipity",
+            "Eloquent",
+            "Vibrant",
+            "Ephemeral",
+            "Zephyr",
+            "Quixotic",
+            "Labyrinth",
+            "Melancholy",
+            "Resplendent",
+            "Celestial",
+            "Oblivion",
+            "Luminescence"
+        ];
+
+        // Update time
+        function updateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.querySelector('.time').textContent = `${hours}:${minutes}`;
+        }
+        
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // Handle input validation and button state
+        const inputFields = document.querySelectorAll('.input-field');
+        const continueButton = document.getElementById('continueButton');
+
+        function checkAllFieldsFilled() {
+            let allFilled = true;
+            
+            inputFields.forEach((input) => {
+                if (input.value.trim() === '') {
+                    allFilled = false;
+                }
+            });
+            
+            return allFilled;
+        }
+
+        function validateInputs() {
+            let allCorrect = true;
+            let allFilled = checkAllFieldsFilled();
+            
+            inputFields.forEach((input, index) => {
+                const value = input.value.trim();
+                const correctWord = correctWords[index];
+                
+                // Check if the input matches the correct word (case insensitive)
+                if (value.toLowerCase() === correctWord.toLowerCase()) {
+                    input.classList.add('correct');
+                    input.classList.remove('incorrect');
+                } else {
+                    input.classList.remove('correct');
+                    if (value !== '') {
+                        input.classList.add('incorrect');
+                    } else {
+                        input.classList.remove('incorrect');
+                    }
+                    allCorrect = false;
+                }
+            });
+            
+            // Change button color when all fields are filled, regardless of correctness
+            if (allFilled) {
+                continueButton.classList.add('active');
+            } else {
+                continueButton.classList.remove('active');
+            }
+            
+            // Auto-click only if all words are correct
+            if (allCorrect) {
+                // Auto-click the continue button after a short delay
+                setTimeout(() => {
+                    continueButton.click();
+                }, 500);
+            }
+            
+            return allCorrect;
+        }
+
+        inputFields.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                validateInputs();
+                
+                // Auto-focus next input when current one is filled
+                if (e.target.value.trim() !== '' && index < inputFields.length - 1) {
+                    const nextInput = inputFields[index + 1];
+                    if (nextInput) {
+                        nextInput.focus();
+                    }
+                }
+            });
+
+            // Handle keyboard navigation
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowDown' && index < inputFields.length - 1) {
+                    inputFields[index + 1].focus();
+                    e.preventDefault();
+                } else if (e.key === 'ArrowUp' && index > 0) {
+                    inputFields[index - 1].focus();
+                    e.preventDefault();
+                }
+            });
+        });
+
+        // Handle continue button click
+        continueButton.addEventListener('click', () => {
+            if (validateInputs()) {
+                alert('Восстановление кошелька успешно! Переход на главный экран...');
+                // In a real app, you would redirect to the main wallet screen
+            } else {
+                alert('Пожалуйста, введите все слова правильно.');
+            }
+        });
+
+        // Handle back button
+        document.querySelector('.back-button').addEventListener('click', () => {
+            if (confirm('Вы уверены, что хотите вернуться? Введенные данные будут потеряны.')) {
+                // In a real app, you would navigate back
+                alert('Возврат на предыдущий экран');
+            }
+        });
+
+        // For testing - fill with correct words
+        function fillWithCorrectWords() {
+            inputFields.forEach((input, index) => {
+                input.value = correctWords[index];
+            });
+            validateInputs();
+        }
+
+        // Uncomment to test auto-filling
+        // setTimeout(fillWithCorrectWords, 2000);
+    </script>
+</body>
+</html>
